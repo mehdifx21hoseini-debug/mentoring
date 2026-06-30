@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<title>گزارش منتورینگ | آکادمی سبحان صمدی</title>
+<meta name="theme-color" content="#0b1130">
+<meta name="description" content="داشبورد مدیریت منتورینگ آکادمی سبحان صمدی">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="icon" href="assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="گزارش منتورینگ">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   Identity: Sobhan Samadi Academy — navy (#1B2E6B) + gold (#C9A84C)
+   Dark glass surface, candlestick-mark signature, restrained motion.
+============================================================ */
+:root{
+  --navy:        #16224f;
+  --navy-deep:   #0b1130;
+  --navy-light:  #24316b;
+  --gold:        #c9a84c;
+  --gold-light:  #e3c878;
+  --bg-0:        #0a0e23;
+  --bg-1:        #0e1330;
+  --bg-2:        #131a3d;
+  --card:        rgba(255,255,255,0.045);
+  --card-hover:  rgba(255,255,255,0.075);
+  --border:      rgba(255,255,255,0.09);
+  --border-soft: rgba(255,255,255,0.05);
+  --tx1:         #f3f4fb;
+  --tx2:         #aab0d4;
+  --tx3:         #6b7299;
+  --green:       #34d399;
+  --green-bg:    rgba(52,211,153,.12);
+  --amber:       #f3b94a;
+  --amber-bg:    rgba(243,185,74,.12);
+  --red:         #f1626a;
+  --red-bg:      rgba(241,98,106,.12);
+  --blue:        #5b8def;
+  --blue-bg:     rgba(91,141,239,.12);
+  --shadow-sm:   0 2px 10px rgba(0,0,0,.25);
+  --shadow-md:   0 10px 30px rgba(0,0,0,.35);
+  --shadow-gold: 0 8px 24px rgba(201,168,76,.25);
+  --radius:      18px;
+  --radius-sm:   12px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(201,168,76,.10), transparent 60%),
+    radial-gradient(900px 700px at -10% 110%, rgba(91,141,239,.10), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, var(--bg-0));
+  color:var(--tx1);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-feature-settings:"ss01";
+}
+img{max-width:100%;display:block;}
+button,input,select,textarea{font-family:inherit;}
+::selection{background:rgba(201,168,76,.35);}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:10px;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+}
+
+/* ---------- Generic surfaces ---------- */
+.glass{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; }
+.card-tt{ font-size:13px; color:var(--tx2); font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:none; border-radius:14px; padding:13px 18px; font-size:14.5px; font-weight:700;
+  cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  font-family:inherit; -webkit-user-select:none; user-select:none;
+}
+.btn:active{ transform:scale(.96); }
+.btn-gold{ background:linear-gradient(135deg, var(--gold-light), var(--gold)); color:#1a1304; box-shadow:var(--shadow-gold); }
+.btn-navy{ background:linear-gradient(135deg, var(--navy-light), var(--navy)); color:#fff; border:1px solid rgba(255,255,255,.08); }
+.btn-ghost{ background:rgba(255,255,255,.05); color:var(--tx1); border:1px solid var(--border); }
+.btn-danger{ background:var(--red-bg); color:var(--red); border:1px solid rgba(241,98,106,.3); }
+.btn-sm{ padding:8px 14px; font-size:13px; border-radius:10px;}
+.btn-block{ width:100%; }
+.btn[disabled]{ opacity:.45; pointer-events:none; }
+
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:12.5px; color:var(--tx2); margin-bottom:7px; font-weight:600;}
+.field input, .field select, .field textarea{
+  width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border);
+  color:var(--tx1); border-radius:12px; padding:12px 14px; font-size:14.5px;
+  transition:border-color .15s, background .15s;
+}
+.field textarea{ resize:vertical; min-height:64px; line-height:1.7;}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none; border-color:var(--gold); background:rgba(201,168,76,.05);
+}
+.field-row{ display:flex; gap:10px; }
+.field-row .field{ flex:1; }
+
+.badge{ display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; }
+.badge-green{ background:var(--green-bg); color:var(--green); }
+.badge-amber{ background:var(--amber-bg); color:var(--amber); }
+.badge-red{ background:var(--red-bg); color:var(--red); }
+.badge-blue{ background:var(--blue-bg); color:var(--blue); }
+.badge-gold{ background:rgba(201,168,76,.14); color:var(--gold-light); }
+
+.empty-state{ text-align:center; padding:40px 16px; color:var(--tx3); }
+.empty-state .ico{ font-size:34px; margin-bottom:10px; opacity:.6; }
+.empty-state p{ font-size:13.5px; }
+
+.toast{
+  position:fixed; bottom:calc(86px + var(--safe-bottom)); left:50%; transform:translateX(-50%) translateY(20px);
+  background:#15193a; border:1px solid var(--border); color:var(--tx1);
+  padding:12px 20px; border-radius:14px; font-size:13.5px; box-shadow:var(--shadow-md);
+  opacity:0; pointer-events:none; transition:all .3s cubic-bezier(.2,.9,.3,1.2); z-index:999; max-width:88vw;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(4,6,18,.7); backdrop-filter:blur(4px);
+  display:none; align-items:flex-end; justify-content:center; z-index:900;
+}
+.modal-overlay.show{ display:flex; animation:fadeIn .2s ease; }
+.modal-sheet{
+  width:100%; max-width:480px; background:var(--bg-1); border:1px solid var(--border);
+  border-radius:22px 22px 0 0; padding:20px 18px calc(20px + var(--safe-bottom));
+  max-height:88vh; overflow-y:auto; animation:slideUp .28s cubic-bezier(.2,.9,.3,1.1);
+}
+@media(min-width:560px){
+  .modal-overlay{ align-items:center; }
+  .modal-sheet{ border-radius:22px; max-height:84vh; }
+}
+@keyframes slideUp{ from{ transform:translateY(40px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+.modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.modal-head h3{ font-size:16.5px; font-weight:800; }
+.modal-close{ width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.06); border:none; color:var(--tx2); font-size:16px; cursor:pointer;}
+
+.spinner{ width:18px; height:18px; border-radius:50%; border:2.5px solid rgba(255,255,255,.25); border-top-color:#fff; animation:spin .7s linear infinite;}
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* ---------- Screens ---------- */
+.screen{ display:none; min-height:100vh; }
+.screen.active{ display:block; animation:fadeIn .25s ease; }
+
+/* ====================== LOGIN ====================== */
+#screen-login{
+  display:none; min-height:100vh; position:relative; flex-direction:column;
+  align-items:center; justify-content:center; padding:24px; text-align:center;
+}
+#screen-login.active{ display:flex; }
+.login-bg-glow{
+  position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none;
+}
+.login-bg-glow::before, .login-bg-glow::after{
+  content:""; position:absolute; border-radius:50%; filter:blur(80px); opacity:.35;
+}
+.login-bg-glow::before{ width:420px; height:420px; background:var(--gold); top:-160px; right:-120px; }
+.login-bg-glow::after{ width:380px; height:380px; background:var(--blue); bottom:-140px; left:-120px; }
+
+.login-logo-wrap{ position:relative; z-index:1; margin-bottom:22px; }
+.login-logo{
+  width:108px; height:108px; border-radius:30px; object-fit:contain; padding:14px;
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  cursor:pointer; transition:transform .12s ease; -webkit-user-select:none; user-select:none;
+}
+.login-logo:active{ transform:scale(.92); }
+.login-title{ position:relative; z-index:1; font-size:21px; font-weight:800; margin-bottom:4px; letter-spacing:.2px;}
+.login-sub{ position:relative; z-index:1; font-size:13px; color:var(--tx2); margin-bottom:34px; }
+.login-card{ position:relative; z-index:1; width:100%; max-width:360px; padding:26px 22px; }
+.login-card .field{ text-align:right; }
+.login-err{ color:var(--red); font-size:12.5px; min-height:18px; margin-top:8px; }
+.login-foot{ position:relative; z-index:1; margin-top:26px; font-size:11px; color:var(--tx3); }
+
+.admin-pulse{ animation:pulse 1.1s ease infinite; }
+@keyframes pulse{ 0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.5);} 50%{box-shadow:0 0 0 10px rgba(201,168,76,0);} }
+
+/* ====================== APP SHELL ====================== */
+.app-shell{ display:none; min-height:100vh; padding-bottom:calc(78px + var(--safe-bottom)); }
+.app-shell.active{ display:block; }
+
+.topbar{
+  position:sticky; top:0; z-index:50; padding:calc(14px + var(--safe-top)) 16px 14px;
+  display:flex; align-items:center; gap:12px;
+  background:rgba(10,14,35,.78); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border-soft);
+}
+.topbar-logo{ width:38px; height:38px; border-radius:11px; object-fit:contain; background:rgba(255,255,255,.05); padding:5px; }
+.topbar-info{ flex:1; min-width:0; }
+.topbar-title{ font-size:14.5px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.topbar-sub{ font-size:11px; color:var(--tx3); }
+.topbar-actions{ display:flex; align-items:center; gap:8px; }
+.icon-btn{
+  width:38px; height:38px; border-radius:12px; background:rgba(255,255,255,.05); border:1px solid var(--border);
+  color:var(--tx2); display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; position:relative;
+}
+.icon-btn .dot{ position:absolute; top:6px; left:6px; width:7px; height:7px; border-radius:50%; background:var(--red); display:none;}
+.icon-btn .dot.show{ display:block; }
+
+.page-wrap{ padding:18px 16px 8px; max-width:720px; margin:0 auto; position:relative; }
+
+/* Sobhan portrait — faint backdrop, dashboard only */
+.hero-portrait{
+  position:absolute; top:0; left:50%; transform:translateX(-50%); width:340px; max-width:90vw;
+  opacity:.05; filter:grayscale(.3); pointer-events:none; z-index:0; mix-blend-mode:luminosity;
+}
+
+.section-title{ font-size:13px; font-weight:800; color:var(--tx2); margin:22px 2px 12px; display:flex; align-items:center; justify-content:space-between; }
+.section-title .lnk{ font-size:12px; color:var(--gold-light); font-weight:700; cursor:pointer; }
+
+/* Bottom nav */
+.bottomnav{
+  position:fixed; bottom:0; right:0; left:0; z-index:60;
+  background:rgba(10,14,35,.86); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--border-soft); padding:8px 6px calc(8px + var(--safe-bottom));
+  display:flex; justify-content:space-around;
+}
+.bnav{
+  background:none; border:none; color:var(--tx3); display:flex; flex-direction:column; align-items:center; gap:3px;
+  font-size:10.5px; font-weight:700; padding:6px 10px; border-radius:12px; cursor:pointer; flex:1; max-width:84px;
+  transition:color .15s;
+}
+.bnav .bico{ font-size:19px; transition:transform .15s; }
+.bnav.active{ color:var(--gold-light); }
+.bnav.active .bico{ transform:translateY(-2px); }
+
+/* tabs (content panels) */
+.tab{ display:none; }
+.tab.active{ display:block; animation:fadeIn .2s ease; }
+
+/* Stat grid */
+.stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; position:relative; z-index:1; }
+.stat-card{ padding:16px; position:relative; overflow:hidden; }
+.stat-card .si{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; margin-bottom:10px; }
+.stat-card .sv{ font-size:23px; font-weight:800; line-height:1; }
+.stat-card .sl{ font-size:11.5px; color:var(--tx3); margin-top:6px; }
+.stat-card .strend{ font-size:10.5px; margin-top:8px; display:flex; align-items:center; gap:4px; }
+
+/* chart card */
+.chart-wrap{ position:relative; z-index:1; }
+canvas{ width:100% !important; display:block; }
+
+/* list rows */
+.row-item{
+  display:flex; align-items:center; gap:12px; padding:13px 4px; border-bottom:1px solid var(--border-soft);
+  cursor:pointer; transition:background .12s;
+}
+.row-item:last-child{ border-bottom:none; }
+.row-item:active{ background:rgba(255,255,255,.03); }
+.row-avatar{
+  width:40px; height:40px; min-width:40px; border-radius:12px;
+  background:linear-gradient(135deg,var(--navy-light),var(--navy)); display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:13px; color:var(--gold-light); border:1px solid rgba(255,255,255,.06);
+}
+.row-main{ flex:1; min-width:0; }
+.row-title{ font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-sub{ font-size:11.5px; color:var(--tx3); margin-top:2px; }
+.row-aside{ text-align:left; font-size:11.5px; color:var(--tx3); }
+
+.progress-bar{ width:100%; height:7px; border-radius:99px; background:rgba(255,255,255,.07); overflow:hidden; margin-top:8px;}
+.progress-bar i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg, var(--gold), var(--gold-light)); }
+
+/* FAB */
+.fab{
+  position:fixed; left:18px; bottom:calc(92px + var(--safe-bottom)); z-index:55;
+  width:54px; height:54px; border-radius:18px; background:linear-gradient(135deg, var(--gold-light), var(--gold));
+  color:#1a1304; border:none; font-size:24px; box-shadow:var(--shadow-gold); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.fab:active{ transform:scale(.92); }
+
+/* segmented control */
+.segmented{ display:flex; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:13px; padding:3px; margin-bottom:14px; }
+.segmented button{
+  flex:1; background:none; border:none; color:var(--tx3); font-size:12.5px; font-weight:700; padding:9px 6px; border-radius:10px;
+  cursor:pointer; transition:all .15s; font-family:inherit;
+}
+.segmented button.active{ background:rgba(255,255,255,.08); color:var(--tx1); }
+
+/* search bar */
+.search-bar{ display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:13px; padding:11px 14px; margin-bottom:12px;}
+.search-bar input{ flex:1; background:none; border:none; color:var(--tx1); font-size:13.5px; outline:none; }
+.search-bar input::placeholder{ color:var(--tx3); }
+
+/* leave gauge */
+.leave-card{ display:flex; align-items:center; gap:14px; }
+.leave-ring{ width:64px; height:64px; min-width:64px; position:relative; }
+.leave-ring svg{ transform:rotate(-90deg); }
+.leave-ring .num{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; }
+
+/* utility */
+.flex-between{ display:flex; align-items:center; justify-content:space-between; }
+.muted{ color:var(--tx3); }
+.gold-text{ color:var(--gold-light); }
+.mt-2{ margin-top:8px;} .mt-3{ margin-top:14px;} .mb-2{ margin-bottom:8px;}
+.tag-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.hidden{ display:none !important; }
+
+/* priority dots */
+.prio-dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+.prio-high{ background:var(--red); } .prio-mid{ background:var(--amber); } .prio-low{ background:var(--green); }
+
+/* skeleton loader */
+.skel{ background:linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.08), rgba(255,255,255,.04)); background-size:200% 100%; animation:shimmer 1.3s infinite; border-radius:10px;}
+@keyframes shimmer{ to{ background-position:-200% 0; } }
+</style>
+</head>
+<body>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div class="screen" id="screen-login">
+  <div class="login-bg-glow"></div>
+  <div class="login-logo-wrap">
+    <img src="assets/logo.png" class="login-logo" id="logo-tap" alt="آکادمی سبحان صمدی">
+  </div>
+  <div class="login-title">گزارش منتورینگ</div>
+  <div class="login-sub">آکادمی سبحان صمدی</div>
+
+  <div class="login-card glass" id="login-card-viewer">
+    <div class="field">
+      <label>رمز ورود</label>
+      <input type="password" id="login-pass" placeholder="رمز عبور را وارد کنید" inputmode="numeric" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-gold btn-block" onclick="doLogin()">ورود به سامانه</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+
+  <div class="login-foot">نسخه ۲ · طراحی‌شده برای موبایل</div>
+</div>
+
+<!-- ============ ADMIN PASSWORD MODAL (hidden trigger) ============ -->
+<div class="modal-overlay" id="modal-admin-gate">
+  <div class="modal-sheet" style="max-width:360px;">
+    <div class="modal-head">
+      <h3>🔐 ورود مدیر</h3>
+      <button class="modal-close" onclick="closeModal('modal-admin-gate')">✕</button>
+    </div>
+    <div class="field">
+      <label>رمز عبور مدیر</label>
+      <input type="password" id="admin-gate-pass" placeholder="••••••••" inputmode="numeric" onkeydown="if(event.key==='Enter')tryAdminGate()">
+    </div>
+    <div class="login-err" id="admin-gate-err"></div>
+    <button class="btn btn-navy btn-block mt-2" onclick="tryAdminGate()">تأیید و ورود</button>
+  </div>
+</div>
+
+<!-- ============ ADMIN APP SHELL ============ -->
+<div class="app-shell" id="shell-admin">
+  <div class="topbar">
+    <img src="assets/logo.png" class="topbar-logo" alt="">
+    <div class="topbar-info">
+      <div class="topbar-title">پنل مدیریت</div>
+      <div class="topbar-sub" id="admin-week-pill">هفته جاری</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="openModal('modal-notifs')" title="اعلان‌ها">🔔<span class="dot" id="notif-dot"></span></button>
+      <button class="icon-btn" onclick="confirmLogout()" title="خروج">⎋</button>
+    </div>
+  </div>
+  <div class="page-wrap">
+
+    <!-- TAB: dashboard -->
+    <div class="tab active" id="tab-a-dashboard"></div>
+    <!-- TAB: report -->
+    <div class="tab" id="tab-a-report"></div>
+    <!-- TAB: archive -->
+    <div class="tab" id="tab-a-archive"></div>
+    <!-- TAB: leaves -->
+    <div class="tab" id="tab-a-leaves"></div>
+    <!-- TAB: projects -->
+    <div class="tab" id="tab-a-projects"></div>
+    <!-- TAB: settings -->
+    <div class="tab" id="tab-a-settings"></div>
+
+  </div>
+
+  <div class="bottomnav">
+    <button class="bnav active" data-tab="dashboard" onclick="showAdminTab('dashboard',this)"><span class="bico">🏠</span><span>داشبورد</span></button>
+    <button class="bnav" data-tab="report" onclick="showAdminTab('report',this)"><span class="bico">📝</span><span>گزارش</span></button>
+    <button class="bnav" data-tab="leaves" onclick="showAdminTab('leaves',this)"><span class="bico">🏖️</span><span>مرخصی</span></button>
+    <button class="bnav" data-tab="projects" onclick="showAdminTab('projects',this)"><span class="bico">📁</span><span>پروژه‌ها</span></button>
+    <button class="bnav" data-tab="settings" onclick="showAdminTab('settings',this)"><span class="bico">⚙️</span><span>تنظیمات</span></button>
+  </div>
+</div>
+
+<!-- ============ VIEWER APP SHELL ============ -->
+<div class="app-shell" id="shell-viewer">
+  <div class="topbar">
+    <img src="assets/logo.png" class="topbar-logo" alt="">
+    <div class="topbar-info">
+      <div class="topbar-title">گزارش منتورینگ</div>
+      <div class="topbar-sub">آکادمی سبحان صمدی</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="confirmLogout()" title="خروج">⎋</button>
+    </div>
+  </div>
+  <div class="page-wrap">
+    <div class="tab active" id="tab-v-dashboard"></div>
+    <div class="tab" id="tab-v-archive"></div>
+    <div class="tab" id="tab-v-leaves"></div>
+    <div class="tab" id="tab-v-projects"></div>
+  </div>
+  <div class="bottomnav">
+    <button class="bnav active" data-tab="dashboard" onclick="showViewerTab('dashboard',this)"><span class="bico">🏠</span><span>داشبورد</span></button>
+    <button class="bnav" data-tab="archive" onclick="showViewerTab('archive',this)"><span class="bico">📂</span><span>آرشیو</span></button>
+    <button class="bnav" data-tab="leaves" onclick="showViewerTab('leaves',this)"><span class="bico">🏖️</span><span>مرخصی</span></button>
+    <button class="bnav" data-tab="projects" onclick="showViewerTab('projects',this)"><span class="bico">📁</span><span>پروژه‌ها</span></button>
+  </div>
+</div>
+
+<!-- ============ SHARED MODALS (rendered into via JS) ============ -->
+<div class="modal-overlay" id="modal-generic">
+  <div class="modal-sheet" id="modal-generic-body"></div>
+</div>
+<div class="modal-overlay" id="modal-notifs">
+  <div class="modal-sheet" style="max-width:380px;">
+    <div class="modal-head"><h3>🔔 اعلان‌ها</h3><button class="modal-close" onclick="closeModal('modal-notifs')">✕</button></div>
+    <div id="notif-list"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal-sheet" style="max-width:340px;">
+    <div class="modal-head"><h3 id="confirm-title">تأیید عملیات</h3></div>
+    <p class="muted" id="confirm-body" style="font-size:13.5px;line-height:1.8;margin-bottom:18px;"></p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-ghost btn-block" onclick="closeModal('modal-confirm')">انصراف</button>
+      <button class="btn btn-danger btn-block" id="confirm-ok-btn">تأیید</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
