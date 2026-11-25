@@ -1,0 +1,23 @@
+# MetaFactory 3.54.6 preview
+
+## Approved launch and close interaction
+- Per-student Open directly starts one live-report primary; it opens no copy-count or mode dialog. A running primary is still brought forward by Show.
+- Main selected Run defaults to live only. Its arrow offers exactly two explicit commands: Live report only / Live + chart review. The latter requests one live primary plus one ordinary review copy per selected student. Existing running copies are reused; the review copy is optional and never opens automatically.
+- The count spinner and Live checkbox have been removed from this flow. Opening or dismissing a dropdown performs no launch/close action; clicking an item executes that command.
+- Compact close menu: Close chart review (Live stays open), Close live reports (Chart review stays open), Close both. Only the selected app language is displayed. Existing row selection and separate close ownership protections remain.
+
+## Early MT4 exit investigation and startup hardening
+The attached 3.54.5 report showed MT4-03 launched twice, loaded its observer, displayed a window, and exited with code0 after about6-7 seconds before a matching account connection was established. The old report does NOT identify the initiator of this normal-code exit. Identity mismatch during initial connection is not itself a terminal-close command, a password verdict, or proof of an internet failure.
+
+- Fixed a confirmed cleanup weakness: a filename acknowledgement in the journal previously allowed immediate deletion of the startup credential file while asynchronous initialization could still be underway. An acknowledged protected file now survives a minimum15-second startup grace, then is removed; acknowledgement is remembered across journal rotation. The existing maximum900-second bound and immediate app-shutdown cleanup remain. This changes file cleanup, not launch pacing or live-report polling. Native confirmation that this explains the user's particular exit remains pending.
+- Live startup explicitly clears the inherited Script setting and retains ShutdownTerminal=false/0, preventing an unintended leftover one-shot script from being selected by startup settings.
+- Unknown early exit now says Closed; reason unknown, and directs users to Support → System check and troubleshooting, not the removed Check connection command.
+- A bounded192-record, credential-free close-request audit records PID, process start marker, executable path and fixed source category for manual/report/probe close paths. A matching request is evidence of a request, not conclusive proof of exit causation. Missing records do not prove an external actor.
+- Early-exit diagnostics include exact launch/PID/times, matching app close requests, bounded Windows Application Error1000 lookup by PID+exact executable path, and observer events limited to that launch. Event messages/command lines/password-bearing configs are not exported. Permission failures, no matches and scan limits are explicit. All failed copies retain their journal summaries; deeper evidence is capped at10 copies.
+- MT4 observer1.05 adds startup expected/actual account-binding and deinitialization-reason messages. Reason9 says the terminal was closing; it does not identify who requested it. Trade/history calculations and financial validation are unchanged. MT5 observer source/runtime are unchanged.
+
+## Install and native verification
+Close MetaFactory and install MetaFactory-Setup-3.54.6-preview.exe. Then open MT4-03 once from its row. If it still exits, use Support → System check and troubleshooting and send the new report. Native MT4 observer recompilation may occur once for the diagnostic source update. A native Windows reproduction is needed before calling the specific early-exit problem resolved.
+
+## Validation
+Built against Microsoft .NET Framework4.5 reference assemblies. Full logic suite:2377 passed,0 failed; one pre-existing Python/Unix chart retry check skipped. Additional close-audit/startup-cleanup checks:14 passed. At normal and simulated125% scale,66 English/Persian live-choice/selection/close checks,30 launch-stop checks and82 table/name/note/hover checks passed per run. Single Open and default group Run are live-only; optional dual-mode exact counts and existing-pair reuse verified. Real harmless sleeper processes exercise exact close scopes and close-request recording. Actual screenshots inspected for both menu choices and all close labels. Installer PE/assembly versions and embedded payload/resources verified, plus package integrity and actual remote download hashes before delivery. Linux tests do not validate MetaEditor compilation, native broker connectivity, Windows event-log access, or the user's native exit cause.
