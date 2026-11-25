@@ -1,0 +1,9 @@
+# MetaFactory 3.56.1 preview — automatic bot connection
+
+In Settings > Bots and delivery, select Telegram or Bale and paste the complete token from that service. After a one-second editing pause, MetaFactory encrypts and saves the token, enables that bot and starts connecting automatically. No connection file, separate Save/connect button or confirmation dialog is required for this action. Its actual connection status appears in the selected channel. Send /start privately to the bot after it connects.
+
+The optional connection-file import button has been removed from settings. General/scheduling settings still use their normal Save changes button. Bot token and on/off changes take effect automatically, including when the settings window is subsequently closed/cancelled; the help text explicitly states automatic saving. A valid pending token is flushed on close so a quick paste-and-close is retained.
+
+Incomplete tokens do not replace a working connection. Each provider is saved separately from the committed configuration, so pending edits to other settings are not automatically committed. Entering a token does not enable daily reports or fixed-destination delivery. A changed provider reconnects independently; existing Telegram/Bale public report permissions, account binding, freshness checks, native launch logic and financial calculations are unchanged from 3.56.0.
+
+Tokens are not embedded in this installer/source/ZIP. They are encrypted for the current Windows user when entered. Real provider connectivity still depends on the Windows PC's network and a valid provider token. Telegram worked for the user after enabling a whole-system VPN; actual Bale network/report success remains to be checked on Windows. UI and mock tests do not establish real API or broker execution success.
