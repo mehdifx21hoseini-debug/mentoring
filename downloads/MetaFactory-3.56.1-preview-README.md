@@ -1,6 +1,6 @@
 # MetaFactory 3.56.1 preview — automatic bot connection
 
-In Settings > Bots and delivery, select Telegram or Bale and paste the complete token from that service. After a one-second editing pause, MetaFactory encrypts and saves the token, enables that bot and starts connecting automatically. No connection file, separate Save/connect button or confirmation dialog is required for this action. Its actual connection status appears in the selected channel. Send /start privately to the bot after it connects.
+In Settings > Bots and delivery, select Telegram or Bale and paste the complete token from that service. After a one-second editing pause, MetaFactory encrypts and saves the token, enables that bot and starts connecting automatically. No connection file, separate Save/connect button or confirmation dialog is required for this action. Re-pasting the same stored token using Paste token also re-enables a disabled bot. Its actual connection status appears in the selected channel. Send /start privately to the bot after it connects.
 
 The optional connection-file import button has been removed from settings. General/scheduling settings still use their normal Save changes button. Bot token and on/off changes take effect automatically, including when the settings window is subsequently closed/cancelled; the help text explicitly states automatic saving. A valid pending token is flushed on close so a quick paste-and-close is retained.
 
