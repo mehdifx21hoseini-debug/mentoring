@@ -1,0 +1,17 @@
+# MetaFactory 3.65.0 preview
+
+This release changes student import/replacement only. The main list, terminal launch/close, live observers, report calculations, bots and retention policy retain the 3.64.4 implementation.
+
+- Reimporting an identical existing account is Unchanged: no login verifier, terminal launch, password rewrite or new connection claim. The existing copy remains visible in the result. An explicit Recheck existing button requests a fresh connection check.
+- Name and folder-only edits update metadata without a connection attempt. Existing copy identity, passwords, history and prior verification evidence remain intact. AllFolders round-trips every membership; missing optional passwords retain the existing encrypted values. Folder updates are durable and recoverable after a save failure, with disk readback before the pending marker is cleared.
+- Changed login credentials require direct positive verification before the existing account is updated. Matching uses account number; ambiguous matches still require a target choice. Platform migration and server/role changes without the required password are blocked. A changed additional password role receives its own proof. Failed, cancelled or unconfirmed attempts preserve the previous account.
+- Conflicting duplicate rows are blocked before authentication. Identical repeated rows are skipped. Rows can be skipped/restored in the preview. Retry targets transient failures instead of repeating successful rows or retrying an explicit login rejection. Copy issues remains name plus account number only; result workbooks include the action, existing copy and whether the existing account was retained, without passwords.
+- Private verification uses exclusive bounded workspaces, tracked process identity and safe recovery. Only a private verifier with matching PID, creation time and executable path can be closed. Student terminals and unknown processes are not adopted or killed. A busy private workspace yields a separate infrastructure state rather than a false password rejection or a cascade of failed checks. Exact-server transient checks have one bounded recovery retry; the existing candidate-server time budget remains bounded.
+- Private verification cache count is bounded per reserved workspace. Unknown, unmarked or linked directories are preserved. This is not a universal byte limit, nor a change to the general storage cleanup policy. Existing normal terminal startup is not throttled by these private-verification slots.
+
+Validation: synthetic existing-account round trips, metadata-only and changed-secret flows, both password roles, cancellation/failure preservation, transient/busy handling, durable folder recovery, file duplicates, skip/restore/recheck, actual import dialog in English/Persian at normal and 125% scaling, bounded workspace ownership/leases/cache/process ancestry, legacy replacement/export/live regressions and the main application test suite. Framework 4.5 build and exact installer resources are checked. Native Windows MetaTrader, SDK/updater child behavior and broker authentication still require validation on the affected machine; Linux/Mono tests do not establish that every broker login will succeed.
+
+Install this update over the existing installation, then reimport the same export. Identical rows should say Unchanged, rather than starting 16 new checks. Use Recheck existing only when a fresh login test is wanted.
+
+Installer: MetaFactory-Setup-3.65.0-preview.exe
+Full source and blank template: MetaFactory-3.65.0-preview-Full-Package.zip
