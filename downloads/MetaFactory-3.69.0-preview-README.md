@@ -1,0 +1,18 @@
+# MetaFactory 3.69.0 preview
+
+One short foreground account-import check, with explicit results.
+
+- Replace3.68.1's two-sweep queue with a single short check for every eligible account, including a single-account import. Default total foreground credential-check budget is20seconds, shared by candidate servers and any separately required second credential-role proof. A pending check finishes Unconfirmed and proceeds to the next row. No automatic end-of-queue full pass and no automatic recovery retry. Manual Retry remains explicit.
+- Native phase/candidate verification still requires the existing fresh acknowledgement, exact account/server and request-token safeguards. Only a positive complete result is registered. A time limit is not a credential rejection. All attempted candidates conclusively rejected yields a rejected outcome; one rejected candidate followed by an uncertain timeout preserves server-specific evidence without claiming every server rejected.
+- Keep phase/server/credential-role details on timeout, without secrets. Show distinct short preview causes for timeout, network failure, unavailable server, rejection and incomplete replacement; full details remain in the tooltip/result workbook. Preserve the previous account on any incomplete replacement, including a second-role timeout after main-role success.
+- Preserve real user cancellation, metadata-only/unchanged handling, duplicate approval and atomic commits. Dispose the operation-owned expired checker before peers; cleanup failure blocks unsafe further credential launches. Concurrency is unchanged.
+- A diagnostics-only foreground adapter preserves VerificationBusyException for its existing blocked-resource behavior, makes safe setup/file/Win32 failure categories readable and redacts stages through the row's existing credential redactor. It never creates authentication proof or assumes ownership of a student's process.
+
+The20-second limit is cooperative: OS/file operations and safe native shutdown can add time. A slow but otherwise valid broker connection may remain Unconfirmed and is not silently added; retry is a user action. Real Windows timing is not certified by Linux/Mono tests. Existing native opening, private helper budgets, background verification loop, live/reporting, parser/prompt, heap settings/display, bots and storage unchanged.
+
+Tests replace obsolete automatic-deferral expectations with single-pass behavior. Coverage includes slow-first plus immediate peers, no hidden retries or second sweep, single-account deadline, network/rejection distinction, partial-candidate evidence, user cancellation, password redaction, visible concise causes, and dual-role replacement preserving both old credentials. Existing transient-recovery foreground regression now explicitly expects no automatic retry and byte-identical old account data. Native helper phase/workspace/identity and financial/live regressions remain.
+
+Installer: MetaFactory-Setup-3.69.0-preview.exe
+Full source, blank template and existing prompt: MetaFactory-3.69.0-preview-Full-Package.zip
+
+Validation:2925 automated checks passed, including16new fast-import checks,46Python,2426main and the parser/workspace/phase/import/UI/replacement/live regression suite. One existing chart retry check skipped for its Python environment requirement. Final Framework4.5 build, installer payload, assembly/PE versions and embedded probes verified. The supplied separate native-launch issue was analyzed read-only: an update-cache pause guard aborted before PID creation; its exact IOException text requires the application log. No native update policy or OS setting changed in this release.
